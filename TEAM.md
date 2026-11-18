@@ -53,22 +53,28 @@ Các mục dưới đây được tổng hợp từ phân vai, phiếu và lịc
 
 - Vai trong bàn: Sản phẩm và kinh doanh.
 - Phụ trách tiêu chí chấp nhận, chỉ số kinh doanh và giải thích quyết định theo ngưỡng đã ký.
-- File/mục liên quan: `config/acceptance_criteria.json`; Phiếu A A1–A5; Phiếu B B3, B7.4, B8.
+- Phiếu & câu phụ trách: Phiếu A câu 1.1 và 1.6, ký tiêu chí ở A5; Phiếu B câu 2.3 (B3: bản đồ dữ liệu/drift), câu 2.9 (B7.4: cổng kinh doanh), phối hợp bằng chứng v1 ở B8; Phiếu C đọc chi phí/ROI/hàng chờ/phân khúc, ghi đánh giá kinh doanh ở C7 và bằng chứng cho v2 ở C12.
+- File liên quan: `config/acceptance_criteria.json`, `config/operating_gates.json` mục `business`, `templates/form-a-criteria.md`, `templates/form-b-evaluation-gates.md`, `templates/form-c-incident.md`.
 
 ### Đóng góp cụ thể
 
 - Đặt ngưỡng pass rate, pass-k, an toàn, chi phí, ROI và hàng chờ trước khi xem kết quả đánh giá.
+- Ký tiêu chí chấp nhận trước lần đánh giá đầu tiên; xác minh hash chữ ký và không sửa tiêu chí sau khi ký.
+- Lập bản đồ dữ liệu chính và nêu drift REFUND-v4 có hiệu lực ngày 2026-12-01, ảnh hưởng `auto_limit_vnd` và `fault_causes`.
 - Đối chiếu chi phí theo phân khúc; đề xuất loại đơn thiếu dữ liệu khỏi phạm vi tự động hóa và chuyển xử lý thủ công.
+- Đọc report S7: chi phí 5.005đ/ticket, ROI 1,0, hàng chờ ùn 0; kiến nghị giữ ngân sách và một người duyệt, đồng thời theo dõi riêng phân khúc kho `?` của bộ nền có chi phí 10.359đ/ticket.
 
 ### Bằng chứng
 
-- Commit ký tiêu chí: `b3a1b2e`, `4271a7f`; bản đồ dữ liệu Phiếu B: `a4dc911`; các số liệu chi tiết tại Phiếu A/B và report grade.
+- Commit: `b3a1b2e` (ký tiêu chí), `4271a7f` (ghi nhận push chữ ký), `a4dc911` (bản đồ dữ liệu Phiếu B), `ffa5307` (bằng chứng kinh doanh S7).
+- Mã run mới nhất: `R-S7-grade-20261118-214317-5c1125`; các chỉ số kinh doanh đạt, nhưng report tự kiểm tra còn FAIL integrity do các incident S1–S6/S8 lệch lock.
+- Dòng trong phiếu: Phiếu A (A1, A4–A5), Phiếu B (B3, B7.4, B8), Phiếu C (C7, C12).
 
 ### Exit ticket
 
 - Một điều học được: ngưỡng tổng thể có thể che khuất một phân khúc không có hiệu quả kinh tế, nên cần đọc cả số theo kho/hãng.
 - Một điều còn chưa chắc: cần bao nhiêu tuần dữ liệu thật mới đủ để hiệu chỉnh ROI và ngưỡng chi phí theo từng kho.
-- AI: trợ lý được dùng để rà soát cổng và câu chữ; phần exit ticket này là bản nháp tổng hợp, cần thành viên xác nhận/chỉnh lại.
+- AI: Trợ lý hỗ trợ tổng hợp ngưỡng và số liệu từ config/report, rà soát tính nhất quán và biên tập câu chữ; số liệu được đối chiếu với report. Exit ticket là bản nháp, cần bạn đọc và chỉnh theo trải nghiệm thật trước khi nộp.
 
 ## NguyenTheTruong-2A202603393
 
