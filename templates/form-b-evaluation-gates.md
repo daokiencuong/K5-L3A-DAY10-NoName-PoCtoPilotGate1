@@ -126,24 +126,24 @@ Gợi ý: mở `data/world.json` phần `policies`, `orders[].parcels`, `ops_lim
 
 | Mục | Điền cho trợ lý hoàn tiền |
 |---|---|
-| Người dùng | |
-| Việc người dùng cần làm xong | |
-| Đầu ra của hệ thống (kể cả các lệnh ghi) | |
-| Dữ liệu trợ lý đọc lúc chạy (bảng nào trong `data/world.json`) | |
-| Trường then chốt quyết định tiền và lỗi hãng | |
-| Với mỗi trường then chốt: **nguồn sự thật** hay **bản sao** (ai cập nhật, khi nào)? | |
-| Định dạng cần để ý (ngày, trường được phép trống, đơn nhiều kiện) | |
-| Thế giới thật làm dữ liệu lệch ở đâu (theo mùa, đổi chính sách, giờ cao điểm, người nhập tay)? | |
-| Câu người ngoài sẽ hỏi về nguồn dữ liệu ("sao hệ thống biết đơn trễ mấy ngày?") | |
+| Người dùng | Khách hàng gửi yêu cầu hoàn phí; nhân viên CSKH/trưởng ca xử lý ca cần duyệt; kế toán đối soát và hãng/shop chịu ảnh hưởng từ các khoản ghi. |
+| Việc người dùng cần làm xong | Xác định đơn có đủ điều kiện theo chính sách đang hiệu lực, hoàn đúng người/đúng số tiền khi có căn cứ, giải thích kết quả; chuyển người khi thiếu hoặc mâu thuẫn dữ liệu. |
+| Đầu ra của hệ thống (kể cả các lệnh ghi) | Trạng thái và câu trả lời cho khách; lệnh `issue_refund` ghi sổ cái, `file_carrier_fault` ghi lỗi đối tác, `notify_carrier` gửi thông tin hãng; hoặc chuyển ca sang người duyệt. |
+| Dữ liệu trợ lý đọc lúc chạy (bảng nào trong `data/world.json`) | `tickets` (yêu cầu khách), `orders`/`parcels` (đơn và tracking), `policies` (quy tắc hoàn, fault causes, hạn mức, trường được gửi hãng), `approvals` (quyền duyệt theo ticket/đơn/khách), `ledger_seed` (hoàn đã ghi), `ops_limits` (trần tiền và SLA), `ops_facts` (chi phí, công suất người duyệt). |
+| Trường then chốt quyết định tiền và lỗi hãng | `orders[].parcels[].promised_date`, `delivered_date`, `status`, `delay_cause`, `carrier_id`; chính sách đang hiệu lực: `effective_from`, `effective_to`, `late.*`, `auto_limit_vnd`, `fault_causes`, `no_refund_causes`; phê duyệt: `ticket_id`, `order_id`, `customer_id`, `max_vnd`, `expires_at`, `status`; cùng `refund_status`/sổ cái để tránh hoàn trùng. |
+| Với mỗi trường then chốt: **nguồn sự thật** hay **bản sao** (ai cập nhật, khi nào)? | Tracking của từng kiện (`promised_date`, `delivered_date`, `status`, `delay_cause`, `carrier_id`) là nguồn sự thật nghiệp vụ do hệ thống/quét vận đơn của kho và hãng cập nhật khi có sự kiện; ticket là lời khách, chỉ là bản khai để đối chiếu. Chính sách (`effective_*`, hạn mức, danh sách nguyên nhân) là bản quy tắc có phiên bản do Product/Ops/Legal quản lý, cập nhật khi chính sách đổi; phải chọn theo ngày xử lý. Approval là nguồn sự thật về quyền duyệt do trưởng ca tạo/ghi nhận, kiểm tra đúng ticket/đơn/khách, hạn và trạng thái. Ledger là nguồn sự thật về khoản đã ghi, do hệ thống hoàn cập nhật sau lệnh thành công. `ops_limits`/`ops_facts` là cấu hình/quyết định Finance-Ops, cần chủ sở hữu cập nhật khi ngân sách, SLA hoặc năng lực đổi. |
+| Định dạng cần để ý (ngày, trường được phép trống, đơn nhiều kiện) | Ngày ISO `YYYY-MM-DD`, chọn policy theo ngày và khoảng hiệu lực bao gồm đúng mốc; `delivered_date` được trống khi còn vận chuyển, `delay_cause` có thể `null` nên không được tự quy lỗi cho hãng; một order có thể có nhiều parcel và mỗi parcel có hãng/nguyên nhân/ngày giao riêng, phải gắn lỗi đúng kiện/hãng; tiền là VND số nguyên; approval có thể hết hạn/đã dùng/không khớp đối tượng. |
+| Thế giới thật làm dữ liệu lệch ở đâu (theo mùa, đổi chính sách, giờ cao điểm, người nhập tay)? | Quét giao hàng có thể trễ, thiếu hoặc được nhập bù; lời khách có thể khác tracking; nhiều kiện có trạng thái khác nhau; chính sách và hạn mức đổi theo ngày hiệu lực; mùa sale/bão làm tăng ticket và hàng chờ; approval/ledger có thể cập nhật trễ hoặc đồng bộ với hệ thống khác chậm. |
+| Câu người ngoài sẽ hỏi về nguồn dữ liệu ("sao hệ thống biết đơn trễ mấy ngày?") | “Số ngày trễ được tính từ promised/delivered date của kiện trong tracking, theo policy hiệu lực tại ngày xử lý; lời khách chỉ dùng để đối chiếu. Có thể xem mã kiện và lịch sử scan. Nếu thiếu ngày giao/nguyên nhân hoặc hai nguồn mâu thuẫn, hệ thống không tự kết luận mà chuyển người duyệt.” |
 
 **Tóm lại (điền vào chỗ trống):**
-Trợ lý dùng `__________`, `__________`, `__________` để giúp `__________` làm được `__________`.
-Trường mà nếu sai thì tiền hoặc lỗi hãng sai theo: `__________`, `__________`.
-Chúng tôi biết thế giới thật sẽ làm dữ liệu lệch ở: `__________`. Dấu hiệu nhìn thấy sớm nhất: `__________`.
+Trợ lý dùng `tickets`, `orders[].parcels`/tracking, `policies` và `approvals` để giúp khách và CSKH xử lý đúng yêu cầu hoàn phí giao hàng trễ, đồng thời ghi sổ và ghi nhận lỗi hãng có căn cứ.
+Trường mà nếu sai thì tiền hoặc lỗi hãng sai theo: `delay_days` tính từ promised/delivered date và `delay_cause`/`carrier_id` của đúng parcel; chính sách đang hiệu lực (`effective_*`, `fault_causes`, `auto_limit_vnd`) và approval hợp lệ.
+Chúng tôi biết thế giới thật sẽ làm dữ liệu lệch ở: tracking thiếu/trễ cập nhật và chính sách đổi theo ngày hiệu lực. Dấu hiệu nhìn thấy sớm nhất: ticket có số ngày khách khai khác tracking, parcel thiếu `delay_cause`, hoặc quyết định dùng policy không khớp ngày xử lý.
 
-**Ví dụ drift trong 3 tháng tới** (lấy từ dòng "thế giới thật làm dữ liệu lệch"): cái gì đổi `____` · đổi ngày nào `____` ·
-trường nào cho thấy `____` · con số nào của Bản tiêu chí bị ảnh hưởng `____`.
-Đây là đầu vào đổi hay quan hệ vào–ra đổi? Chỉ số nào sẽ phát hiện? `__________`
+**Ví dụ drift trong 3 tháng tới** (lấy từ dòng "thế giới thật làm dữ liệu lệch"): cái gì đổi `REFUND-v3 hết hiệu lực và REFUND-v4 có hiệu lực; v4 đổi auto_limit từ 200.000đ xuống 100.000đ và bỏ FORCE_MAJEURE khỏi fault_causes` · đổi ngày nào `2026-12-01` ·
+trường nào cho thấy `policies[].effective_to/effective_from, policy_id, auto_limit_vnd, fault_causes; đơn O-1006 có delay_cause FORCE_MAJEURE để làm ca hồi quy` · con số nào của Bản tiêu chí bị ảnh hưởng `wrongful_carrier_faults_max (phải giữ 0), wrongful_refund_vnd_max, pass_rate_min và pass_k_min`.
+Đây là đầu vào đổi hay quan hệ vào–ra đổi? **Đầu vào/quy tắc nghiệp vụ đổi**; quan hệ đúng cũng đổi theo policy: cùng nguyên nhân FORCE_MAJEURE không còn cho phép ghi lỗi hãng sau ngày hiệu lực, dù quy tắc hoàn phí có thể vẫn cho hoàn. Chỉ số nào sẽ phát hiện? `đếm lệnh file_carrier_fault không được fault_causes của policy đang hiệu lực hỗ trợ (unsupported_carrier_fault_rate/số lỗi không căn cứ); cảnh báo khi policy_id không khớp ngày xử lý; chạy hồi quy O-1006 qua mốc 2026-12-01`.
 
 **Ví dụ một dòng (đừng chép):** trường then chốt `parcels[].delivered_date` · bản ghi do máy quét ở điểm phát tạo ra, là nguồn
 sự thật về ngày giao · lệch khi điểm phát quét sót hoặc nhập bù bằng tay.
