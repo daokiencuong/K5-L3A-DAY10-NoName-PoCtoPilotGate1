@@ -1,6 +1,6 @@
 # Phiếu B · Đo, rủi ro, cổng vòng 1 và quyết định v1 · Khối 2A + 2B + chốt (phút 65–115)
 
-**Bàn:** ______
+**Bàn:** NoName (L3A)
 
 Tiêu chí đã ký ở Phiếu A. Từ phút 65 bàn mới được chạy trợ lý. Khối 2A (65–85) chưa sửa code hay config. Khối 2B (85–105) sửa
 `lab10/guards.py` và `config/operating_gates.json`. Phút 105–115 chốt cổng vòng 1 rồi viết quyết định v1. Sau phút 115 không sửa phiếu này
@@ -32,7 +32,7 @@ Mọi con số trong quyết định Gate 1 phải trỏ về một dòng ở đ
 | 1 | `R-base-before-20261118-164952-b45eeb` | base · base | (baseline, chưa có cổng) | 0.9909 [0.9727, 1.0000] | 0.9545 | 20.000đ · 1 lỗi · 0 pii | 0.2273 (22.73%) | Thất bại do ca T-002@55 bị model override tin khách, gây hoàn sai 20k và phạt oan hãng VNX. |
 | 2 | `R-base-after-20261118-170019-4b2ac7` | base · after | (cổng vòng 1, thử trước khi chốt) | 1.0000 [1.0000, 1.0000] | 1.0000 | 0đ · 0 lỗi · 0 pii | 0.2273 (22.73%) | Thêm write_gate kiểm tra quyền lợi DB và lỗi hãng; mọi chỉ số bắt buộc đạt 100%. |
 | 3 | `R-base-prepared-20261118-170108-4b2ac7` | base · prepared | (cổng vòng 1 đã chốt) | 1.0000 [1.0000, 1.0000] | 1.0000 | 0đ · 0 lỗi · 0 pii | 0.2273 (22.73%) | Chốt checkpoint 390f5fb6; tái hiện hoàn hảo kết quả đạt 100% trên bộ nền. |
-| 4 | | | | | | | | |
+| 4 | `R-base-prepared-20261118-173939-15361a` | base · prepared | (không đổi gì; chạy lại để kiểm tái lập trước khi nộp) | 1.0000 [1.0000, 1.0000] | 1.0000 | 0đ · 0 lỗi · 0 pii | 0.2273 (22.73%) | Kết quả trùng khớp lần 3, cổng vòng 1 cho kết quả ổn định; 13/13 unit test đạt. |
 
 ---
 
@@ -184,8 +184,6 @@ với bên thứ ba. Mỗi lỗi là một khoản phạt hãng phải trả, v�
 
 Không bắt buộc điền đủ năm dòng. Bắt buộc: **ít nhất ba dòng, trong đó một dòng là nhánh bàn chưa thấy trên trace**.
 
-Không bắt buộc điền đủ năm dòng. Bắt buộc: **ít nhất ba dòng, trong đó một dòng là nhánh bàn chưa thấy trên trace**.
-
 **Mở rộng ra ngoài kỹ thuật (thêm ít nhất hai dòng):** "thành phần" không chỉ là model và tool. Áp cùng năm từ gợi ý vào:
 
 | Thành phần ngoài code | Ví dụ câu hỏi |
@@ -218,15 +216,15 @@ Trạng thái: **Xong** (có bằng chứng) · **Chưa** · **Không áp dụng
 
 | # | Nhóm việc | Bằng chứng lấy từ đâu (đã có sẵn trong lab) | Mục cần kiểm tra | Trạng thái | Bằng chứng | PIC |
 |---|---|---|---|---|---|---|
-| 1 | Chất lượng | Report `lab10.eval` (mã lần chạy) + bảng soát lỗi (Phiếu B mục B2) | `pass_rate`, `pass_k` đạt ngưỡng đã ký trên bộ nền ở mốc prepared; `T-002@55` đã xếp loại lỗi | Chưa | Chờ mã lần chạy base và prepared (B0) | NV-TUNG (Lê Thanh Tùng) |
-| 2 | Dữ liệu | Bản đồ dữ liệu (Phiếu B mục B3, câu 2.3): trường nào là nguồn sự thật, trường nào là bản sao | `delay_cause`, `delivered_date` là nguồn sự thật; cờ `refund_status` (đối soát đêm) và cờ `index_active` của chính sách là bản sao có thể cũ | Chưa | B3; drift REFUND-v4 có hiệu lực 2026-12-01 | NV-OANH (Phạm Kiều Oanh) |
-| 3 | Bảo mật | Một vòng HAZOP với guideword PERTURBED (Phiếu B mục B4): chữ nào đi vào model mà không do LogiX viết | Chữ ticket và `checkout_note` do khách gõ đi vào model; không có chữ nào đi thẳng tới lệnh ghi mà không qua cổng | Chưa | B4 dòng PERTURBED; cổng ở B7.1 | NV-TUNG (Lê Thanh Tùng) |
-| 4 | Quyền hạn | `config/switches.json` + guard trước lệnh ghi; thẻ S2, S8 có thêm mục mức kiểm soát (Phiếu C mục C3) | Mỗi lệnh ghi có công tắc riêng; khoản vượt hạn mức tự động (200.000đ, REFUND-v3) phải có phê duyệt hợp lệ của NV-HANH cho đúng ticket | Chưa | `config/switches.json` (4 công tắc đang `on`); `approver_id = NV-HANH`; cổng ở B7.1 | NV-HANH (Trần Thị Hạnh) |
-| 5 | Hiệu năng, hạ tầng | Đội tự ước tính; HAZOP guideword INCAPABLE: LLM không trả lời thì sao; số người duyệt và số ca mỗi giờ | 1 người trực × 6 ca/giờ = 48 ca/ca 480 phút; LLM lỗi thì ticket chuyển người, không ghi lại lần hai | Chưa | `operations.reviewers_on_shift = 1`, `review_capacity_per_hour = 6`; số ca bị ùn trong report base | NV-TUNG (Lê Thanh Tùng) |
-| 6 | Chi phí | Khối "kinh doanh và vận hành" của report: chi phí mỗi ticket so với làm tay, ROI, tiền LLM ticket đắt nhất; `config/operating_gates.json` mục `business` | Chi phí mỗi ticket < 10.000đ (làm tay); tiền LLM ≤ 1.500đ/ticket; tổng hoàn tự động ≤ 2.000.000đ/ngày | Chưa | Chờ report base; mục `business` do vai Sản phẩm và kinh doanh điền | NV-OANH (Phạm Kiều Oanh) |
+| 1 | Chất lượng | Report `lab10.eval` (mã lần chạy) + bảng soát lỗi (Phiếu B mục B2) | `pass_rate`, `pass_k` đạt ngưỡng đã ký trên bộ nền ở mốc prepared; `T-002@55` đã xếp loại lỗi | Xong | `R-base-prepared-20261118-170108-4b2ac7`: pass_rate 1.0 [1.0, 1.0], pass_k 1.0; `T-002@55` xếp loại lỗi chìm (B2) | NV-TUNG (Lê Thanh Tùng) |
+| 2 | Dữ liệu | Bản đồ dữ liệu (Phiếu B mục B3, câu 2.3): trường nào là nguồn sự thật, trường nào là bản sao | `delay_cause`, `delivered_date` là nguồn sự thật; cờ `refund_status` (đối soát đêm) và cờ `index_active` của chính sách là bản sao có thể cũ | Xong | B3 (bản đồ dữ liệu + ví dụ drift REFUND-v4 có hiệu lực 2026-12-01, ca hồi quy O-1006) | NV-OANH (Phạm Kiều Oanh) |
+| 3 | Bảo mật | Một vòng HAZOP với guideword PERTURBED (Phiếu B mục B4): chữ nào đi vào model mà không do LogiX viết | Chữ ticket và `checkout_note` do khách gõ đi vào model; không có chữ nào đi thẳng tới lệnh ghi mà không qua cổng | Xong | B4 dòng PERTURBED; cổng `write_gate` ở B7.1 đối chiếu tracking DB; B7.3: 2 ticket injection không tạo dòng sổ cái / lỗi hãng / gửi hãng | NV-TUNG (Lê Thanh Tùng) |
+| 4 | Quyền hạn | `config/switches.json` + guard trước lệnh ghi; thẻ S2, S8 có thêm mục mức kiểm soát (Phiếu C mục C3) | Mỗi lệnh ghi có công tắc riêng; khoản vượt hạn mức tự động (200.000đ, REFUND-v3) phải có phê duyệt hợp lệ của NV-HANH cho đúng ticket | Xong | `config/switches.json` (4 công tắc riêng, đang `on`); `operations.approver_id = NV-HANH`; cổng ở B7.1. Kiểm phê duyệt hợp lệ cho khoản vượt hạn mức (thẻ S2, S8) để vòng 2 | NV-HANH (Trần Thị Hạnh) |
+| 5 | Hiệu năng, hạ tầng | Đội tự ước tính; HAZOP guideword INCAPABLE: LLM không trả lời thì sao; số người duyệt và số ca mỗi giờ | 1 người trực × 6 ca/giờ = 48 ca/ca 480 phút; LLM lỗi thì ticket chuyển người, không ghi lại lần hai | Xong | `operations.reviewers_on_shift = 1`, `review_capacity_per_hour = 6`; report `R-base-prepared-20261118-170108-4b2ac7`: chờ lâu nhất 0 phút, 0 ca bị ùn | NV-TUNG (Lê Thanh Tùng) |
+| 6 | Chi phí | Khối "kinh doanh và vận hành" của report: chi phí mỗi ticket so với làm tay, ROI, tiền LLM ticket đắt nhất; `config/operating_gates.json` mục `business` | Chi phí mỗi ticket < 10.000đ (làm tay); tiền LLM ≤ 1.500đ/ticket; tổng hoàn tự động ≤ 2.000.000đ/ngày | Xong | Report `R-base-prepared-20261118-170108-4b2ac7`: 4.456đ/ticket (làm tay 10.000đ), ROI 1.24, LLM đắt nhất 770đ (trần 1.500đ), hoàn tự động 155.000đ/ngày (trần 2.000.000đ); mục `business` ở B7.4. Lưu ý kho `?` 10.359đ/ticket > làm tay | NV-OANH (Phạm Kiều Oanh) |
 | 7 | Vận hành | Runbook (Phiếu B mục B7.5–B7.6) + `config/operating_gates.json` mục `operations` (PIC, người duyệt, số người trực, điều kiện dừng, kênh báo tin) + metric trong `monitors.py` | Đủ PIC, người duyệt, kênh báo tin, điều kiện dừng; runbook 1–3 khớp con số trong config | Xong (phần config và runbook); monitor để vòng 2 | `config/operating_gates.json` mục `operations`; B7.5, B7.6 | NV-TUNG (Lê Thanh Tùng) |
-| 8 | Con người, pháp lý | Bên thứ ba (hãng, tài xế, shop, người nhận quà, người đứng tên duyệt); `config/operating_gates.json` mục `legal`; thẻ S6, S7, S8 có mục riêng ở Phiếu C mục C3 | Không gửi dữ liệu cá nhân cho hãng; chỉ ghi lỗi hãng khi tracking có nguyên nhân; có người nhận khiếu nại của hãng | Xong (phần config); chờ report kiểm `pii_leaks = 0` | `legal.pii_fields_blocked_to_third_party = ["recipient_contact", "customer_note"]`, `legal.carrier_fault_requires_recorded_cause = true` | NV-OANH (Phạm Kiều Oanh) |
-| 9 | Quyết định | Câu tiêu chí (Phiếu A mục A4) + hash Bản tiêu chí đã ký + quyết định Gate 1 (Phiếu B mục B8, Phiếu C mục C12) | Tiêu chí ký và push trước lần chạy đầu; quyết định v1 khớp `decision_rule` | Chưa | Phiếu A mục A5; B8 | NV-TUNG (Lê Thanh Tùng) |
+| 8 | Con người, pháp lý | Bên thứ ba (hãng, tài xế, shop, người nhận quà, người đứng tên duyệt); `config/operating_gates.json` mục `legal`; thẻ S6, S7, S8 có mục riêng ở Phiếu C mục C3 | Không gửi dữ liệu cá nhân cho hãng; chỉ ghi lỗi hãng khi tracking có nguyên nhân; có người nhận khiếu nại của hãng | Xong | `legal.pii_fields_blocked_to_third_party = ["recipient_contact", "customer_note"]`, `legal.carrier_fault_requires_recorded_cause = true`; report `R-base-prepared-20261118-170108-4b2ac7`: `pii_leaks = 0`, lỗi hãng oan = 0 | NV-OANH (Phạm Kiều Oanh) |
+| 9 | Quyết định | Câu tiêu chí (Phiếu A mục A4) + hash Bản tiêu chí đã ký + quyết định Gate 1 (Phiếu B mục B8, Phiếu C mục C12) | Tiêu chí ký và push trước lần chạy đầu; quyết định v1 khớp `decision_rule` | Xong | Commit `b3a1b2e` (Sign acceptance criteria) trước lần chạy đầu; checkpoint `390f5fb6`; quyết định v1 ở B8 | NV-TUNG (Lê Thanh Tùng) |
 
 Ô "Chưa" có rủi ro cao → chuyển thành một dòng Risk register (Phiếu C mục C10).
 
