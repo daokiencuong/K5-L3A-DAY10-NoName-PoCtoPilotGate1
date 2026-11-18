@@ -32,11 +32,67 @@ from .tools import Verdict
 
 
 def pre_guard(ctx):
+    ticket = ctx.ticket or {}
+    order_id = ticket.get("order_id")
+    order = ctx.tools.lookup_order(order_id) if order_id else None
+    if not order:
+        return Verdict.escalate("Không xác minh được đơn trong tracking DB; chuyển CSKH xử lý thủ công")
+
+    scope = (ctx.gates or {}).get("business", {}).get("pilot_scope", {})
+    if scope.get("mode") == "warehouse":
+        allowed = scope.get("warehouses") or []
+        warehouse = order.get("warehouse_id")
+        if not warehouse or warehouse not in allowed:
+            return Verdict.escalate("Kho thiếu mã hoặc ngoài phạm vi pilot; chuyển CSKH xử lý thủ công")
     return Verdict.allow()
 
 
 def write_gate(ctx, action):
     tool = action.get("tool")
+
+    # Cổng 3: Chỉ gửi đúng các trường trong hợp đồng hiện hành cho hãng.
+    # Payload được dựng bởi model nên phải lọc theo allow-list và dựng lại
+    # các giá trị từ tracking DB, không dùng giá trị tự do do model cung cấp.
+    if tool == "notify_carrier":
+        policy = H.effective_policy(ctx.tools.lookup_policies(), ctx.as_of)
+        if not policy:
+            return Verdict.escalate("Không xác định được chính sách chia sẻ dữ liệu đang hiệu lực")
+
+        allowed = policy.get("carrier_notice_fields")
+        payload = action.get("payload")
+        if not isinstance(allowed, list) or not allowed or not isinstance(payload, dict):
+            return Verdict.escalate("Thiếu allow-list hoặc payload thông báo hãng không hợp lệ")
+
+        order_id = payload.get("order_id")
+        order = ctx.tools.lookup_order(order_id) if order_id else None
+        if not order:
+            return Verdict.escalate("Không xác minh được đơn trong tracking DB trước khi gửi hãng")
+
+        parcel_id = payload.get("parcel_id")
+        parcel = next((p for p in order.get("parcels", []) if p.get("parcel_id") == parcel_id), None)
+        if not parcel:
+            return Verdict.escalate("Không xác minh được kiện trong tracking DB trước khi gửi hãng")
+
+        safe_values = {
+            "order_id": order["order_id"],
+            "parcel_id": parcel["parcel_id"],
+            "district": order.get("recipient", {}).get("district"),
+            "delay_days": H.db_delay_days(parcel, ctx.as_of),
+        }
+        safe_payload = {key: safe_values[key] for key in allowed if key in safe_values}
+        if set(safe_payload) != set(allowed) or any(value is None for value in safe_payload.values()):
+            return Verdict.escalate("Allow-list hợp đồng có trường chưa thể dựng an toàn từ tracking DB")
+
+        changes = {}
+        if payload != safe_payload:
+            changes["payload"] = safe_payload
+        carrier_id = parcel.get("carrier_id")
+        if not carrier_id or not ctx.tools.lookup_carrier(carrier_id):
+            return Verdict.escalate("Không xác minh được hãng của kiện trong tracking DB")
+        if action.get("carrier_id") != carrier_id:
+            changes["carrier_id"] = carrier_id
+        if changes:
+            return Verdict.modify("Lọc payload theo hợp đồng và dựng lại dữ liệu từ tracking DB", **changes)
 
     # Cổng 1: Kiểm soát lệnh hoàn tiền (issue_refund)
     if tool == "issue_refund":

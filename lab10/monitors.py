@@ -14,19 +14,37 @@ lab10.grade kiểm: monitor chạy không lỗi, và giá trị trên gói sự 
 tức là monitor "sáng đèn" khi sự cố xảy ra.
 """
 
+import re
+
+
+CARRIER_NOTICE_FIELDS = frozenset({"order_id", "parcel_id", "district", "delay_days"})
+
+
+def _contains_phone_like_value(value):
+    """Catch phone-like values even when placed inside an otherwise allowed field."""
+    if isinstance(value, dict):
+        return any(_contains_phone_like_value(v) for v in value.values())
+    if isinstance(value, (list, tuple)):
+        return any(_contains_phone_like_value(v) for v in value)
+    if isinstance(value, str):
+        digits = re.sub(r"\D", "", value)
+        return len(digits) >= 9
+    return False
+
 
 def escalation_rate(trials):
     return sum(t["status"] == "escalated" for t in trials) / max(1, len(trials))
 
 
 def carrier_pii_notice_rate(trials):
-    """Tỉ lệ ticket có thông báo gửi hãng vận chuyển chứa trường PII hoặc trường ngoài hợp đồng (recipient_contact, customer_note)."""
+    """Tỉ lệ ticket có thông báo hãng chứa trường ngoài hợp đồng hoặc giá trị giống số điện thoại."""
     count = 0
     for t in trials:
         for m in t.get("outbound", []):
             if m.get("to", "").startswith("carrier:"):
                 payload = m.get("payload", {})
-                if "recipient_contact" in payload or "customer_note" in payload:
+                outside_contract = set(payload) - CARRIER_NOTICE_FIELDS
+                if outside_contract or _contains_phone_like_value(payload):
                     count += 1
                     break
     return round(count / max(1, len(trials)), 4)

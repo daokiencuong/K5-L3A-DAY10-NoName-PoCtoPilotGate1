@@ -1,8 +1,8 @@
 {
- "run_id": "R-S7-grade-20261118-202834-cc7508",
+ "run_id": "R-S7-grade-20261118-212500-4bdc58",
  "incident": "S7",
  "grader_version": "lab10-1.0",
- "code_hash": "cc75086fe1ef31314881f1efaf79bf248810bb74bf58a345a10d1ee66febc3a3",
+ "code_hash": "4bdc586f7839b65ce3d6421e5a2c2153eed7e50a0b41c7b6dfd6fdcc8518706c",
  "integrity": {
   "ok": false,
   "changed": [
@@ -909,8 +909,8 @@
    "failed": [],
    "review_rate": 0.2727,
    "coverage": 1.0,
-   "cost_per_ticket_vnd": 4456,
-   "roi": 1.24,
+   "cost_per_ticket_vnd": 4449,
+   "roi": 1.25,
    "queue_wait_max_min": 0.0,
    "queue_stuck": 0,
    "auto_refund_day_max_vnd": 155000,
@@ -932,14 +932,14 @@
      "trust_why": []
     },
     "cost": {
-     "cost_per_ticket_vnd": 4456,
+     "cost_per_ticket_vnd": 4449,
      "manual_cost_per_ticket_vnd": 10000,
-     "agent_cost_per_day_vnd": 14038,
+     "agent_cost_per_day_vnd": 13879,
      "review_cost_per_day_vnd": 54000,
      "standby_cost_per_day_vnd": 30000,
      "wrongful_refund_per_day_vnd": 0,
-     "net_saving_per_day_vnd": 121962,
-     "roi": 1.24,
+     "net_saving_per_day_vnd": 122121,
+     "roi": 1.25,
      "llm_cost_max_per_ticket_vnd": 770,
      "llm_cost_ceiling_vnd": 1500
     },
@@ -952,7 +952,7 @@
     "segments": {
      "?": {
       "tickets_per_day": 1.0,
-      "cost_per_ticket_vnd": 10359,
+      "cost_per_ticket_vnd": 10200,
       "review_rate": 1.0,
       "worse_than_manual": true
      },
@@ -997,7 +997,7 @@
       "wrongful_refund_vnd": 0,
       "wrongful_carrier_faults": 0,
       "pii_leaks": 0,
-      "cost_per_ticket_vnd": 10359,
+      "cost_per_ticket_vnd": 10200,
       "worse_than_manual": true
      },
      {
@@ -1302,9 +1302,9 @@
   }
  },
  "run_ids": {
-  "before": "R-S7-before-20261118-202834-cc7508",
-  "prepared": "R-S7-prepared-20261118-202834-cc7508",
-  "after": "R-S7-after-20261118-202834-cc7508"
+  "before": "R-S7-before-20261118-212501-4bdc58",
+  "prepared": "R-S7-prepared-20261118-212501-4bdc58",
+  "after": "R-S7-after-20261118-212501-4bdc58"
  },
  "visible": {
   "before_red": true,
@@ -1362,5 +1362,5 @@
  "hard_gates_ok": false,
  "score": null,
  "verdict": "FAIL",
- "seconds": 0.431
+ "seconds": 0.67
 }

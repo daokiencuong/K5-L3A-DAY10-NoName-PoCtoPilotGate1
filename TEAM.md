@@ -22,7 +22,55 @@ Ghi `members` trong `submission/submission.json` theo dạng `"HoVaTen-MSSV"`, k
 
 ## Cá nhân
 
-Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi tiêu đề thành họ tên không dấu và MSSV, ví dụ `## NguyenVanAn-20241234`).
+Các mục dưới đây được tổng hợp từ phân vai, phiếu và lịch sử commit. Cả bàn đã dùng trợ lý AI để rà soát logic cổng và hoàn thiện câu chữ; mỗi thành viên cần đọc lại, chỉnh exit ticket theo trải nghiệm thật của mình trước khi nộp cá nhân.
+
+## DaoKienCuong-2A202603396
+
+### Phần việc phụ trách
+
+- Vai trong bàn: Trưởng nhóm, Vận hành và pháp lý.
+- Phụ trách điều phối hồ sơ cuối, kiểm sự cố S7, tổng hợp quyết định v2, điều kiện dừng và nội dung nộp.
+- File/mục liên quan: Phiếu C C0–C2, C10–C12; `submission/submission.json`; `TEAM.md`.
+
+### Đóng góp cụ thể
+
+- Điều phối chạy lại grade S7 sau khi sửa; đối chiếu report với tiêu chí đã ký và ghi lại quyết định cùng điều kiện theo dõi pilot.
+- Chốt cách chuyển thủ công các ticket thiếu mã đơn/kho và đầu mối xử lý khi có cảnh báo dữ liệu.
+
+### Bằng chứng
+
+- Commit hồ sơ nhóm: `a5385cd`; bài nộp/phiếu C: `73aac9c`; kết quả mới nhất được ghi tại Phiếu C và `submission/runs/`.
+
+### Exit ticket
+
+- Một điều học được: quyết định pilot phải đi cùng phạm vi cụ thể, người chịu trách nhiệm và hành động dừng có thời hạn.
+- Một điều còn chưa chắc: dữ liệu mock chưa cho biết tải thật của nhóm ticket phải chuyển người trong giờ cao điểm.
+- AI: trợ lý được dùng để rà soát cổng và câu chữ; phần exit ticket này là bản nháp tổng hợp, cần thành viên xác nhận/chỉnh lại.
+
+## KieuDinhVan-2A202603376
+
+### Phần việc phụ trách
+
+- Vai trong bàn: Sản phẩm và kinh doanh.
+- Phụ trách tiêu chí chấp nhận, chỉ số kinh doanh và giải thích quyết định theo ngưỡng đã ký.
+- File/mục liên quan: `config/acceptance_criteria.json`; Phiếu A A1–A5; Phiếu B B3, B7.4, B8.
+
+### Đóng góp cụ thể
+
+- Đặt ngưỡng pass rate, pass-k, an toàn, chi phí, ROI và hàng chờ trước khi xem kết quả đánh giá.
+- Đối chiếu chi phí theo phân khúc; đề xuất loại đơn thiếu dữ liệu khỏi phạm vi tự động hóa và chuyển xử lý thủ công.
+
+### Bằng chứng
+
+- Commit ký tiêu chí: `b3a1b2e`, `4271a7f`; bản đồ dữ liệu Phiếu B: `a4dc911`; các số liệu chi tiết tại Phiếu A/B và report grade.
+
+### Exit ticket
+
+- Một điều học được: ngưỡng tổng thể có thể che khuất một phân khúc không có hiệu quả kinh tế, nên cần đọc cả số theo kho/hãng.
+- Một điều còn chưa chắc: cần bao nhiêu tuần dữ liệu thật mới đủ để hiệu chỉnh ROI và ngưỡng chi phí theo từng kho.
+- AI: trợ lý được dùng để rà soát cổng và câu chữ; phần exit ticket này là bản nháp tổng hợp, cần thành viên xác nhận/chỉnh lại.
+
+## NguyenTheTruong-2A202603393
 
 ## NguyenTheTruong-2A202603393
 
@@ -51,21 +99,27 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 - Một điều học được: Các chốt chặn an toàn (guardrails) cấp hệ thống nằm ngoài mô hình ngôn ngữ đóng vai trò sống còn trong việc ngăn chặn các hành vi vượt rào (model override) và bảo vệ an toàn tài chính, pháp lý cho doanh nghiệp.
 - Một điều còn chưa chắc: Làm thế nào để tối ưu hóa việc phân luồng giữa tự động hóa bằng guards và chuyển duyệt thủ công (escalation) để vừa đảm bảo an toàn vừa không làm quá tải đội ngũ vận hành trong các đợt cao điểm.
+- AI: trợ lý được dùng để rà soát logic allow-list, monitor và câu chữ trong hồ sơ; thành viên xác nhận nội dung phản ánh đúng phần việc của mình.
 
-## HoVaTen-MSSV
+## HoangBaoNguyen-2A202603384
 
 ### Phần việc phụ trách
 
-Vai trong bàn; câu nào của đề, mục nào của phiếu A/B/C, file nào (`lab10/guards.py`, `config/operating_gates.json`, …).
+- Vai trong bàn: Vận hành và pháp lý.
+- Phụ trách mục tiêu của kế toán/trưởng ca, HAZOP và checklist rủi ro con người/pháp lý, cổng vận hành và runbook.
+- File/mục liên quan: Phiếu A A1–A2; Phiếu B B4–B5, B7.5–B7.6; Phiếu C C4, C10–C11.
 
 ### Đóng góp cụ thể
 
-...
+- Ghi rõ PIC, approver, sức duyệt, ngưỡng hàng chờ, kênh cảnh báo và các bước dừng/tắt thao tác khi có sự cố.
+- Đối chiếu phạm vi dữ liệu được gửi hãng với trường hợp người nhận quà không phải người đặt hàng.
 
 ### Bằng chứng
 
-Mã commit, mã lần chạy (`runs/<mã>`), dòng trong phiếu.
+- Commit phân vai vận hành/pháp lý: `d621c11`; phần Phiếu A/B liên quan: `9c84fb0`; evidence chi tiết tại Phiếu B B4–B7.6 và Phiếu C C4/C11.
 
 ### Exit ticket
 
-Một điều học được, một điều còn chưa chắc.
+- Một điều học được: mỗi điều kiện dừng cần có người nhận cảnh báo, thao tác tắt rõ ràng và thời hạn thực hiện.
+- Một điều còn chưa chắc: quy trình liên hệ người nhận quà bị ảnh hưởng cần được kiểm chứng với Pháp chế và kênh hỗ trợ thực tế.
+- AI: trợ lý được dùng để rà soát logic và câu chữ; phần exit ticket này là bản nháp tổng hợp, cần thành viên xác nhận/chỉnh lại.

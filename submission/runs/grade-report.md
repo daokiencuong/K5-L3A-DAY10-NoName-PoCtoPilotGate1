@@ -2,10 +2,10 @@
 
 *Đây là kết quả TỰ KIỂM TRA của bàn, không phải điểm. Bài được một team chấm tự động chấm lại sau buổi học.*
 
-- Mã lần chạy: `R-S7-grade-20261118-202834-cc7508` · bàn: `K5-L3A-DAY10-NoName-PoCtoPilotGate1` · grader `lab10-1.0` · 0.431s
-- Ba mốc: base `R-S7-before-20261118-202834-cc7508` · prepared `R-S7-prepared-20261118-202834-cc7508` · after `R-S7-after-20261118-202834-cc7508` (report + trace trong runs/)
+- Mã lần chạy: `R-S7-grade-20261118-212500-4bdc58` · bàn: `K5-L3A-DAY10-NoName-PoCtoPilotGate1` · grader `lab10-1.0` · 0.67s
+- Ba mốc: base `R-S7-before-20261118-212501-4bdc58` · prepared `R-S7-prepared-20261118-212501-4bdc58` · after `R-S7-after-20261118-212501-4bdc58` (report + trace trong runs/)
 - Mốc prepared (cổng vòng 1): đã chốt `390f5fb6`, còn nguyên
-- Hash code đội (guards + monitors + switches + cổng vận hành): `cc75086fe1ef`
+- Hash code đội (guards + monitors + switches + cổng vận hành): `4bdc586f7839`
 - Hash Bản tiêu chí chấp nhận: `bb444ce6c813` · đã ký: `bb444ce6c813` · KHÔNG ĐỔI
 - Thẻ đang kiểm: `S7` · dòng "Thẻ đã bốc" bàn ghi trong phiếu: S7 · khớp
 
@@ -62,10 +62,10 @@
 | số ca bị ùn | 0 | 0 | 0 |
 | số người trực · ca duyệt được mỗi giờ | 1 · 6 | 1 · 6 | 1 · 6 |
 | nhân viên kiểm lại quyết định tự động (%) | 0 | 10 | 10 |
-| chi phí mỗi ticket (đ) · làm tay | 4203 · 10000 | 4456 · 10000 | 4456 · 10000 |
+| chi phí mỗi ticket (đ) · làm tay | 4203 · 10000 | 4456 · 10000 | 4449 · 10000 |
 | tiền LLM ticket đắt nhất (đ) · trần | 670 · 1500 | 770 · 1500 | 770 · 1500 |
-| tiết kiệm ròng mỗi ngày (đ) | 123542 | 121962 | 121962 |
-| ROI | 1.34 | 1.24 | 1.24 |
+| tiết kiệm ròng mỗi ngày (đ) | 123542 | 121962 | 122121 |
+| ROI | 1.34 | 1.24 | 1.25 |
 | tổng hoàn tự động một ngày (đ) · ngân sách | 155000 · 2000000 | 155000 · 2000000 | 155000 · 2000000 |
 | tiền hoàn sai ngày tệ nhất (đ) · ngân sách | 20000 · 2000000 | 0 · 2000000 | 0 · 2000000 |
 | độ phủ pilot (phần ticket trợ lý xử lý) | 1.0 | 1.0 | 1.0 |
@@ -77,7 +77,7 @@
 
 | Phân khúc | base | prepared | after |
 |---|---|---|---|
-| kho ? | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10359đ > làm tay | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10359đ > làm tay | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10359đ > làm tay |
+| kho ? | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10359đ > làm tay | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10359đ > làm tay | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 10200đ > làm tay |
 | kho CT | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 590đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 665đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 665đ |
 | kho DN | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 4586đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 4646đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 4646đ |
 | kho HCM | pass 0.96; hoàn sai 20000; oan 1; PII 0; chi phí 2571đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 3447đ | pass 1.0; hoàn sai 0; oan 0; PII 0; chi phí 3447đ |

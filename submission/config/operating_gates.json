@@ -4,8 +4,8 @@
     "daily_refund_cap_vnd": 2000000,
     "cost_budget_per_ticket_vnd": 1500,
     "pilot_scope": {
-      "mode": "all",
-      "warehouses": [],
+      "mode": "warehouse",
+      "warehouses": ["CT", "DN", "HCM", "HN"],
       "percent": 100
     },
     "roi_min": 0.2
@@ -21,7 +21,8 @@
       "Khi có 1 thông báo gửi hãng chứa tên, số điện thoại hoặc địa chỉ của khách hay người nhận thì NV-TUNG tắt notify_carrier trong 15 phút",
       "Khi có 1 khoản hoàn sai tiền hoặc dùng phê duyệt không hợp lệ thì NV-TUNG tắt issue_refund, mọi ticket chuyển NV-HANH duyệt tay",
       "Khi có ca chờ người duyệt quá 60 phút trong 2 giờ liên tiếp thì thu hẹp pilot_scope về một kho cho tới hết ngày",
-      "Khi tổng hoàn tự động trong ngày chạm 2.000.000đ thì ngừng hoàn tự động tới hết ngày, phần còn lại chuyển NV-HANH"
+      "Khi tổng hoàn tự động trong ngày chạm 2.000.000đ thì ngừng hoàn tự động tới hết ngày, phần còn lại chuyển NV-HANH",
+      "Đơn không có mã kho hoặc ngoài danh sách pilot_scope được chuyển sang quy trình CSKH thủ công"
     ],
     "alert_channel": "#logix-refund-pilot-canh-bao",
     "decision_note": true,
