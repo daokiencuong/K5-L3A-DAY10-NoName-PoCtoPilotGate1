@@ -1,12 +1,17 @@
 {
-  "team": "",
-  "members": [],
-  "incident": "",
-  "decision_v1": "",
-  "decision_v2": "",
+  "team": "K5-L3A-DAY10-NoName-PoCtoPilotGate1",
+  "members": [
+    "DaoKienCuong-2A202603396",
+    "KieuDinhVan-2A202603376",
+    "NguyenTheTruong-2A202603393",
+    "HoangBaoNguyen-2A202603384"
+  ],
+  "incident": "S7",
+  "decision_v1": "Tiếp tục",
+  "decision_v2": "Tiếp tục",
   "three_lines": {
-    "environment_assumption": "",
-    "reduce_or_prevent": "",
-    "measure_in_pilot": ""
+    "environment_assumption": "Chúng tôi giả định rằng đối tác vận chuyển khi nhận thông báo lỗi sẽ chỉ dùng dữ liệu cho mục đích đối soát kỹ thuật nội bộ mà không tự ý liên hệ riêng với người nhận hàng ngoài đời thực.",
+    "reduce_or_prevent": "Cổng của đội thực sự NGĂN được tác hại vì áp dụng cơ chế lọc cứng danh sách trắng loại bỏ triệt để các trường ngoài danh mục hợp đồng trước khi phát lệnh ghi notify_carrier.",
+    "measure_in_pilot": "Cần đo kiểm thực tế xem việc lược bỏ customer_note có ảnh hưởng tới hiệu quả giao hàng bù của tài xế hay không, và giám sát tỷ lệ khiếu nại đối tác qua chỉ số carrier_pii_notice_rate trong 2 tuần pilot đầu tiên."
   }
 }

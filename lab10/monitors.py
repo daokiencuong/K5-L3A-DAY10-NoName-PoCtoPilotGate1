@@ -19,7 +19,21 @@ def escalation_rate(trials):
     return sum(t["status"] == "escalated" for t in trials) / max(1, len(trials))
 
 
+def carrier_pii_notice_rate(trials):
+    """Tỉ lệ ticket có thông báo gửi hãng vận chuyển chứa trường PII hoặc trường ngoài hợp đồng (recipient_contact, customer_note)."""
+    count = 0
+    for t in trials:
+        for m in t.get("outbound", []):
+            if m.get("to", "").startswith("carrier:"):
+                payload = m.get("payload", {})
+                if "recipient_contact" in payload or "customer_note" in payload:
+                    count += 1
+                    break
+    return round(count / max(1, len(trials)), 4)
+
+
 MONITORS = {
     "escalation_rate": escalation_rate,     # có sẵn; KHÔNG tính là metric mới của đội
+    "carrier_pii_notice_rate": carrier_pii_notice_rate,
 }
 STARTER_MONITORS = ("escalation_rate",)
