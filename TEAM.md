@@ -5,7 +5,7 @@
 * Tên nhóm (`TenNhom`, không dấu, không khoảng trắng): NoName
 * Lớp: `L3A` / `L3B`
 * Repo của bàn: [K5-L3A-DAY10-NoName-PoCtoPilotGate1](https://github.com/daokiencuong/K5-L3A-DAY10-NoName-PoCtoPilotGate1)
-* Thẻ sự cố đã bốc (S1–S8):
+* Thẻ sự cố đã bốc (S1–S8): S7
 
 ## Thành viên
 
@@ -43,8 +43,9 @@ Mỗi thành viên tự viết một mục bên dưới (chép mẫu, đổi ti�
 
 ### Bằng chứng
 
-- Mã commit: `33cdb03` (cổng: Phiếu A (1.3)).
-- Dòng trong phiếu: Phiếu A (Mục A2 - Câu 1.3), Phiếu B (B0, B1, B2, B7.1–B7.3), Phiếu C (C0, C1, C2, C7, C8).
+- Mã commit: `33cdb03` (cổng: Phiếu A (1.3)), `0ba90f8` (LAB 10: chốt cổng vòng 1, quyết định v1), `73aac9c` (LAB 10: hoàn thành phiếu C, cổng vòng 2 sự cố S7 và bài nộp submission).
+- Dòng trong phiếu: Phiếu A (Mục A2 - Câu 1.3), Phiếu B (B0, B1, B2, B7.1–B7.3), Phiếu C (C0, C1, C2, C7, C8, C9–C12).
+- Sử dụng AI: Dùng trợ lý AI hỗ trợ rà soát câu chữ trong Phiếu B & C, kiểm tra logic các nhánh fault tree và tham khảo cấu trúc hàm monitor telemetry.
 
 ### Exit ticket
 
