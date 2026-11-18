@@ -322,6 +322,8 @@ python3 -m lab10.grade --incident Sx
 | [2] | Hệ thống tự trích xuất thông tin người nhận đơn quà tặng vào payload | `legal.pii_fields_blocked_to_third_party` trong `config/operating_gates.json` chặn trường `recipient_contact` | Chặn (Hard Gate) | **NGĂN HẲN**: Lọc bỏ hoàn toàn đối tượng liên hệ người nhận, chỉ giữ 4 trường kỹ thuật hợp lệ | `R-S7-after-20261118-172326-89f89c` |
 | [3] | Chưa có công cụ giám sát phát hiện kịp thời khi payload có trường PII lạ | Hàm `carrier_pii_notice_rate` trong `lab10/monitors.py` | Phát hiện (Telemetry) | **GIẢM KHẢ NĂNG**: Cảnh báo sớm nếu có trường mới lọt qua cổng để Ops xử lý dừng khẩn cấp | `R-S7-after-20261118-172326-89f89c` |
 
+**Góc nhìn Sản phẩm và kinh doanh:** Theo report mới nhất `R-S7-grade-20261118-202834-cc7508`, không cần tăng ngân sách hay số người trực: chi phí mỗi ticket 5.005đ so với 10.000đ làm tay; ROI 1,0 (ngưỡng ≥ 0,20); hàng chờ ùn 0, thời gian chờ tối đa 0 phút; LLM tối đa 782đ so với trần 1.500đ; hoàn tự động 26.000đ so với ngân sách ngày 2.000.000đ; độ phủ 100%. Vì S7 là sự cố PII, các con số này không tự chứng minh an toàn dữ liệu. Kho HN có chi phí phân khúc S7 cao nhất 2.102đ/ticket, vẫn dưới chi phí làm tay. Riêng bộ nền có kho `?` tốn 10.359đ/ticket (>10.000đ làm tay); theo dõi/loại khỏi tự động hóa các ticket không xác định kho nếu pilot thật tái hiện mức này, chuyển CSKH xử lý tay. Không đề xuất tăng reviewers hoặc giảm scope toàn hệ thống chỉ để xử lý PII.
+
 ---
 
 <a id="c8"></a>
@@ -423,13 +425,13 @@ Cột v1 nằm ở Phiếu B mục B8; không sửa cột đó.
 |---|---|
 | Commit ký tiêu chí | `b3a1b2e` |
 | Hash chốt cổng vòng 1 | `390f5fb6` |
-| Mã lần chạy dùng làm bằng chứng | thẻ, mốc base: `R-S7-before-20261118-172326-89f89c` · prepared: `R-S7-prepared-20261118-172326-89f89c` · after: `R-S7-after-20261118-172326-89f89c` |
-| Còn dòng "vượt trần" nào trong report? (hàng chờ, chi phí, ROI, trần tiền, pháp lý) | không (toàn bộ 9/9 tiêu chí bắt buộc, khuyến nghị và kinh doanh đều đạt; 0 ca vượt trần) |
-| Kho hoặc hãng có số xấu nhất: Kho `HCM` (ở base lộ 15 ca PII, prepared/after sạch 100%), kho `?` có chi phí 10.359đ > làm tay nếu đơn không gán kho. Nếu chỉ nhìn phân khúc này, quyết định có đổi không? | Không đổi quyết định; với phân khúc kho chưa định danh `?` có thể loại trừ để CSKH xử lý tay, còn lại 100% các kho chính thức đều vận hành đạt chuẩn an toàn tuyệt đối với ROI 1.0 - 1.24. |
+| Mã lần chạy dùng làm bằng chứng | thẻ, mốc base: `R-S7-before-20261118-202834-cc7508` · prepared: `R-S7-prepared-20261118-202834-cc7508` · after: `R-S7-after-20261118-202834-cc7508` |
+| Còn dòng "vượt trần" nào trong report? (hàng chờ, chi phí, ROI, trần tiền, pháp lý) | Kinh doanh/vận hành trên S7: không — chi phí 5.005đ/ticket, ROI 1,0, ùn 0, chờ tối đa 0 phút, LLM 782đ < 1.500đ, hoàn 26.000đ < ngân sách 2.000.000đ, độ phủ 100%. Tuy nhiên report tự kiểm tra tổng thể vẫn FAIL integrity do các file incident S1–S6, S8 không khớp integrity lock; không được ghi là toàn bộ kiểm tra đã đạt hoặc chỉ dựa số kinh doanh để chốt Tiếp tục. |
+| Kho hoặc hãng có số xấu nhất: Kho `HN` có chi phí S7 cao nhất 2.102đ/ticket; kho `?` trong bộ nền có chi phí 10.359đ > làm tay. Nếu chỉ nhìn phân khúc này, quyết định có đổi không? | Với S7, không đổi scope/ngân sách vì HN vẫn dưới 10.000đ/ticket, PII sau sửa bằng 0 ở mọi kho/hãng. Với quyết định pilot chung, cần giám sát riêng ticket thiếu định danh kho `?` (chi phí bộ nền vượt làm tay) và chuyển tay/thu hẹp phân khúc này nếu pilot thật xác nhận. Lỗi integrity vẫn cần xử lý riêng trước khi cho phép tiếp tục. |
 | Quyết định (khoanh một) | **Tiếp tục** |
 | Bằng chứng 1: mã lần chạy + chỉ số bắt buộc nào đạt / chưa | `R-S7-after-20261118-172326-89f89c`: `pass_rate` = 1.0 (≥ 0.95), `pass_k` = 1.0 (≥ 0.90), `wrongful_refund_vnd` = 0đ (≤ 0), `wrongful_carrier_faults` = 0 (≤ 0), `pii_leaks` = 0 (≤ 0) — toàn bộ chỉ số bắt buộc ĐẠT |
 | Bằng chứng 2 | Bộ nền chạy hồi quy (regression) đạt 100% pass_rate (`R-base-prepared-20261118-170108-4b2ac7`), không phát sinh bất kỳ ca hỏng mới nào |
-| Bằng chứng 3 | Chi phí mỗi ticket 5.005đ (giảm 50% so với 10.000đ làm tay), ROI đạt 1.00 (≥ 0.20), hàng chờ 0 ca bị ùn, thời gian chờ tối đa 0.0 phút |
+| Bằng chứng 3 | `R-S7-after-20261118-202834-cc7508`: chi phí mỗi ticket 5.005đ (<10.000đ làm tay), ROI 1,0 (≥0,20), hàng chờ ùn 0, chờ tối đa 0 phút; LLM tối đa 782đ (<1.500đ), hoàn tự động 26.000đ (<2.000.000đ/ngày), độ phủ 100%. Vai Sản phẩm và kinh doanh không đề xuất tăng ngân sách/nhân sự; lưu ý bộ nền có kho `?` giá 10.359đ/ticket cần theo dõi riêng. |
 | Khớp dòng nào trong `decision_rule` đã ký? | Khớp dòng "Tiếp tục": *"Chỉ cân nhắc pilot có giám sát khi mọi chỉ số bắt buộc đạt trên bộ nền và gói sự cố, không có hoàn sai/lỗi hãng oan/lộ PII, chi phí mỗi ticket không quá 10.000đ, ROI tối thiểu 0,20 và không có ca ùn; phạm vi, người duyệt và điều kiện dừng phải được chốt riêng."* |
 | Nếu Thu hẹp: cắt kho nào / còn bao nhiêu phần trăm / mấy người trực, và ticket bị cắt đi đâu | (Nếu cần thận trọng: Tạm thời loại trừ các đơn thiếu mã kho `?` chuyển duyệt tay, 100% đơn có kho hợp lệ chạy pilot bình thường) |
 | Nếu Cải tiến thêm: giả thuyết cụ thể (nhánh nào của fault tree) + hạn | (Không áp dụng ở v2 vì toàn bộ các chỉ số đã đạt chuẩn xuất sắc) |
