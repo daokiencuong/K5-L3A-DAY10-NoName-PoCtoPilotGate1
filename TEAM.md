@@ -72,8 +72,6 @@ Các mục dưới đây được tổng hợp từ phân vai, phiếu và lịc
 
 ## NguyenTheTruong-2A202603393
 
-## NguyenTheTruong-2A202603393
-
 ### Phần việc phụ trách
 
 - Vai trong bàn: Kỹ sư cổng.
