@@ -11,12 +11,12 @@
 
 Họ tên đầy đủ và MSSV của **mọi** thành viên; thêm dòng nếu cần. Vai: Kỹ sư cổng · Sản phẩm và kinh doanh · Vận hành và pháp lý (README mục 3, phút 0–15).
 
-| STT | Họ và tên         | MSSV        | Vai | Trưởng nhóm |
-| --: | ----------------- | ----------- | --- | :---------: |
-|   1 | Đào Kiên Cường    | 2A202603396 |     |      X      |
-|   2 | Kiều Đình Văn     | 2A202603376 |     |             |
-|   3 | Nguyễn Thế Trường | 2A202603393 |     |             |
-|   4 | Hoàng Bảo Nguyên  | 2A202603384 |     |             |
+| STT | Họ và tên         | MSSV        | Vai                    | Trưởng nhóm |
+| --: | ----------------- | ----------- | ---------------------- | :---------: |
+|   1 | Đào Kiên Cường    | 2A202603396 | Vận hành và pháp lý    |      X      |
+|   2 | Kiều Đình Văn     | 2A202603376 | Sản phẩm và kinh doanh |             |
+|   3 | Nguyễn Thế Trường | 2A202603393 | Kỹ sư cổng             |             |
+|   4 | Hoàng Bảo Nguyên  | 2A202603384 | Vận hành và pháp lý    |             |
 
 Ghi `members` trong `submission/submission.json` theo dạng `"HoVaTen-MSSV"`, khớp bảng trên.
 
